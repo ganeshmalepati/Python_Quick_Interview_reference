@@ -1,0 +1,171 @@
+1. What is MCP?
+MCP (Model Context Protocol) is a standardized protocol that enables LLMs (AI models) to communicate with external tools, APIs, databases, and applications.
+It acts as a bridge or translator between AI models and the digital ecosystem.
+Designed to be modular, flexible, and language-independent (Python, Java, JavaScript, .NET, etc.).
+
+
+2. MCP Architecture
+2. MCP Architecture
+
+MCP follows a Client-Server Architecture consisting of three components:
+
+a) Host
+User-facing environment.
+Examples: VS Code, Claude Desktop.
+Responsibilities:
+Receives user prompts.
+Manages UI and permissions.
+Establishes connections to servers.
+b) Client
+Resides inside the host.
+Acts as an intermediary between the model and server.
+Responsibilities:
+Sends requests to servers.
+Receives responses.
+Integrates results back into the model.
+c) Server
+Provides actual capabilities.
+Executes requests and returns results.
+Exposes:
+Resources
+Prompts
+Tools
+
+
+5. MCP Request Flow
+Step 1: User Request
+
+User submits a query through the Host.
+
+↓
+
+Step 2: Connection Establishment
+
+Host initiates communication.
+
+↓
+
+Step 3: Capability Negotiation
+
+Client and server determine:
+
+Available tools
+Resources
+Supported capabilities
+
+↓
+
+Step 4: Tool Invocation
+
+Model requests a tool or resource.
+
+↓
+
+Step 5: Server Execution
+
+Server performs the operation.
+
+↓
+
+Step 6: Result Returned
+
+Server sends results to the client.
+
+↓
+
+Step 7: Final Response
+
+Client combines tool output with the LLM response and presents it to the user.
+
+
+
+Key Takeaways
+MCP is a standardized bridge between AI models and external systems.
+It follows a Host → Client → Server architecture.
+Servers expose Resources, Prompts, and Tools.
+Tools enable AI models to perform actions, not just generate text.
+Communication is based on JSON-RPC.
+MCP adds capability negotiation, tool invocation, authentication, and progress tracking.
+Security and user consent are built into the protocol.
+MCP is language-agnostic and supports Python, Java, JavaScript, and .NET.
+It enables AI agents to interact with the real world instead of merely discussing it.
+
+
+
+Recommended MCP Security Architecture
+
+
+
+User
+  │
+  ▼
+Identity Provider (Microsoft Entra ID)
+  │
+  ▼
+MCP Server
+  │
+  ├── RBAC & Least Privilege
+  ├── Prompt Shields
+  ├── Azure Content Safety
+  ├── Logging & Monitoring
+  │
+  ▼
+Tools / APIs / Models / Vector DB
+  │
+  ├── Supply Chain Security
+  ├── CodeQL Scanning
+  ├── GitHub Advanced Security
+  │
+  ▼
+Enterprise Resources
+
+
+
+
+
+MCP Security Best Practices – Concise Summary
+1. Why MCP Security Matters
+MCP enables AI models to interact with tools, APIs, and external data.
+This introduces new risks beyond traditional software security.
+Goal: Make AI systems secure, reliable, and trustworthy.
+2. Major Security Threats
+🔹 Prompt Injection
+Malicious instructions hidden in user input or external content.
+Can cause unintended actions or data leakage.
+🔹 Indirect Prompt Injection
+Hidden prompts embedded in:
+Emails
+PDFs
+Web pages
+LLM interprets them as instructions and may leak sensitive data.
+🔹 Tool Poisoning
+Attackers modify tool metadata (descriptions or parameters).
+Causes the LLM to invoke dangerous or unintended tools.
+🔹 Dynamic Tool Modification (Rug Pull)
+Tools are changed after user approval.
+Common risk in hosted environments.
+🔹 Data Exfiltration
+
+
+
+Key Takeaways (Most Important)
+
+✅ Protect against Prompt Injection and Tool Poisoning.
+
+✅ Follow the Principle of Least Privilege (PoLP) using RBAC.
+
+✅ Never use token pass-through; authenticate with dedicated MCP server tokens.
+
+✅ Use Microsoft Prompt Shields and Azure Content Safety for defense against prompt attacks.
+
+✅ Secure the entire AI supply chain (models, APIs, embeddings, tools).
+
+✅ Follow OWASP, enable MFA, logging, monitoring, and adopt Zero Trust principles.
+
+In short:
+
+MCP security is about controlling access, validating tools and prompts, protecting against prompt attacks, and maintaining a strong overall security posture.
+
+
+
+
